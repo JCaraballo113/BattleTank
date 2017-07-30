@@ -2,10 +2,11 @@
 
 #pragma once
 
-#include "Public/Tank.h"
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "TankAIController.generated.h"
+
+class ATank;
 
 /**
  * 
@@ -17,6 +18,7 @@ class BATTLETANK_API ATankAIController : public AAIController
 
 private:
 	void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 	ATank* GetControlledAITank() const;
 	ATank* GetPlayerTank() const;
 };
