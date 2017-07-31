@@ -31,7 +31,8 @@ void ATankPlayerController::AimTowardsCrosshair() const
 	if (!GetControlledTank()) return;
 
 	FVector HitLocation; // OUT parameter
-	if(GetSightRayHitLocation(OUT HitLocation))
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+	if(bGotHitLocation)
 	{
 		GetControlledTank()->AimAt(HitLocation);
 	}
@@ -73,15 +74,16 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	FHitResult HitResult;
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
 	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
-	
-	if(GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility))
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Camera)
+		)
 	{
 		HitLocation = HitResult.Location;
 		return true;
 	}
-	else
-	{
-		HitLocation = FVector(0.0f);
-		return false;
-	}
+	HitLocation = FVector(0);
+	return false; // Line trace didn't succeed
 }
