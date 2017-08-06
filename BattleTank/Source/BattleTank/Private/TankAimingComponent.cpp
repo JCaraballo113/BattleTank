@@ -68,13 +68,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	// Calculate the out launch velocity
 	if (bHaveAimSolution)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Found solution: %s"), *GetOwner()->GetName());
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Did not find anything solution: %s"), *GetOwner()->GetName());
 	}
 }
 
