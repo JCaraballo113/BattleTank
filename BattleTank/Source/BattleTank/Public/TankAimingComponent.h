@@ -7,6 +7,14 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
 
+UENUM()
+enum class EFiringState : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
 class UTankBarrel;
 class UTankTurret;
 
@@ -22,13 +30,17 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void Initialize(UTankTurret* TurretReference, UTankBarrel* BarrelReference);
+
 	void AimAt(FVector HitLocation, float LaunchSpeed);
-	void SetTurretReference(UTankTurret* TurretReference);
-	void SetBarrelReference(UTankBarrel* BarrelReference);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+		EFiringState FiringStatus = EFiringState::Aiming;
 
 private:
 	UTankBarrel* Barrel = nullptr;
