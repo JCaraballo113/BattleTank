@@ -25,7 +25,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 void ATankPlayerController::AimTowardsCrosshair() const
 {
 	// If we don't have a controlled tank, return.
-	if (!ensure(GetPawn())) return;
+	if (!GetPawn()) return;
 
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }

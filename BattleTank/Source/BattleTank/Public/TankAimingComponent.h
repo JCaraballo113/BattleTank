@@ -39,12 +39,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 
+	EFiringState GetFiringState() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringState FiringStatus = EFiringState::Locked;
+		EFiringState FiringStatus = EFiringState::Reloading;
 
 private:
 	UTankBarrel* Barrel = nullptr;
@@ -60,6 +62,8 @@ private:
 		float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
+	FVector AimDirection;
 
+	bool IsBarrelMoving();
 	void MoveBarrelTowards(FVector AimDirection);
 };
