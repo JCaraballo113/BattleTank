@@ -43,6 +43,14 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Particle Setup")
 		URadialForceComponent* ExplosionForce = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Projectile Timing")
+		float DestroyDelay = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Projectile Damage")
+		float ProjectileDamage = 20.f;
+
 	UFUNCTION(BlueprintCallable, Category = "Impact Collision")
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	void OnTimerEnd();
 };
