@@ -33,8 +33,12 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 		float LineTraceRange = 10000000.0f;
 
+	virtual void SetPawn(APawn* InPawn) override;
 	void AimTowardsCrosshair() const;
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& WorldDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+
+	UFUNCTION()
+	void OnTankDeath();
 };
